@@ -1,0 +1,27 @@
+type GIF {
+  id: ID!
+  name: String!
+	URL: String!
+	user: String!
+	tags: [String]!
+	createdAt: String!
+}
+
+type GIFPagination {
+	page: Int!
+	rowsPerPage: Int!
+	totalRows: Int!
+	results:     [GIF]!
+}
+
+input GIFInput {
+  content: String!
+  name: String!
+	user: String!
+	tags: [String]!
+}
+
+input GIFSearchInput {
+	query: String
+	page: Int!
+}

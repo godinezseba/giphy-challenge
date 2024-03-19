@@ -1,0 +1,3 @@
+type Mutation {
+  createGIF(input: GIFInput): GIF
+}
