@@ -3,7 +3,7 @@ type GIF {
   name: String!
 	URL: String!
 	user: String!
-	tags: [String]!
+	tags: [String!]!
 	createdAt: String!
 }
 
@@ -18,7 +18,7 @@ input GIFInput {
   content: String!
   name: String!
 	user: String!
-	tags: [String]!
+	tags: [String!]!
 }
 
 input GIFSearchInput {

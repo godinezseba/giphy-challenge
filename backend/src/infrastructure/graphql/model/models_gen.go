@@ -3,19 +3,19 @@
 package model
 
 type Gif struct {
-	ID        string    `json:"id"`
-	Name      string    `json:"name"`
-	URL       string    `json:"URL"`
-	User      string    `json:"user"`
-	Tags      []*string `json:"tags"`
-	CreatedAt string    `json:"createdAt"`
+	ID        string   `json:"id"`
+	Name      string   `json:"name"`
+	URL       string   `json:"URL"`
+	User      string   `json:"user"`
+	Tags      []string `json:"tags"`
+	CreatedAt string   `json:"createdAt"`
 }
 
 type GIFInput struct {
-	Content string    `json:"content"`
-	Name    string    `json:"name"`
-	User    string    `json:"user"`
-	Tags    []*string `json:"tags"`
+	Content string   `json:"content"`
+	Name    string   `json:"name"`
+	User    string   `json:"user"`
+	Tags    []string `json:"tags"`
 }
 
 type GIFPagination struct {

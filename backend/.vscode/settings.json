@@ -1,5 +1,6 @@
 {
   "conventionalCommits.scopes": [
-    "graphql"
+    "graphql",
+    "use_cases/gif"
   ]
 }

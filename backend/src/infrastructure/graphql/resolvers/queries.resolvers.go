@@ -6,14 +6,20 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 	"giphy/challenge/src/infrastructure/graphql/model"
+	"giphy/challenge/src/infrastructure/graphql/model/mappers"
 	"giphy/challenge/src/infrastructure/graphql/server/config"
 )
 
 // Gifs is the resolver for the gifs field.
 func (r *queryResolver) Gifs(ctx context.Context, input *model.GIFSearchInput) (*model.GIFPagination, error) {
-	panic(fmt.Errorf("not implemented: Gifs - gifs"))
+	results, err := r.GIFUseCase.FindByFilter(ctx, mappers.GIFSearchModelToEntity(input))
+
+	if err != nil {
+		return nil, err
+	}
+
+	return mappers.GifPaginationEntityToModel(results), nil
 }
 
 // Query returns config.QueryResolver implementation.

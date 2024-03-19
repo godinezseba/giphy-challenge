@@ -6,14 +6,20 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 	"giphy/challenge/src/infrastructure/graphql/model"
+	"giphy/challenge/src/infrastructure/graphql/model/mappers"
 	"giphy/challenge/src/infrastructure/graphql/server/config"
 )
 
 // CreateGif is the resolver for the createGIF field.
 func (r *mutationResolver) CreateGif(ctx context.Context, input *model.GIFInput) (*model.Gif, error) {
-	panic(fmt.Errorf("not implemented: CreateGif - createGIF"))
+	result, err := r.GIFUseCase.Create(ctx, mappers.GIFInputModelToEntity(input))
+
+	if err != nil {
+		return nil, err
+	}
+
+	return mappers.GIFEntityToModel(result), nil
 }
 
 // Mutation returns config.MutationResolver implementation.
