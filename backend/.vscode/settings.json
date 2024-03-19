@@ -2,6 +2,7 @@
   "conventionalCommits.scopes": [
     "graphql",
     "use_cases/gif",
-    "adapters/mongo/gif"
+    "adapters/mongo/gif",
+    "adapters/http/giphy"
   ]
 }

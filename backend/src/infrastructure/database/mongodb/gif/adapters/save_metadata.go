@@ -7,7 +7,7 @@ import (
 	"log"
 )
 
-func (g *GIFMongoDBAdapter) SaveMetadata(ctx context.Context, gif *entities.GIF) (*entities.GIF, error) {
+func (g *gifMongoDBAdapter) SaveMetadata(ctx context.Context, gif *entities.GIF) (*entities.GIF, error) {
 	log.Println("[MongoDB > GIF > SaveMetadata] Saving...")
 
 	gifModel := mappers.GIFEntityToModel(gif)

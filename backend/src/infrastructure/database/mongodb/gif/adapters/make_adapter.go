@@ -6,18 +6,18 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-type GIFMongoDBAdapter struct {
+type gifMongoDBAdapter struct {
 	gifCollection *mongo.Collection
 }
 
-func MakeBookMongoDBAdapter(client *mongo.Client) *GIFMongoDBAdapter {
+func MakeGIFMongoDBAdapter(client *mongo.Client) *gifMongoDBAdapter {
 	mongoGIFDatabase := os.Getenv("MONGO_GIF_DATABASE")
 	mongoGIFCollection := os.Getenv("MONGO_GIF_COLLECTION")
 
 	db := client.Database(mongoGIFDatabase)
 	gifCollection := db.Collection(mongoGIFCollection)
 
-	return &GIFMongoDBAdapter{
+	return &gifMongoDBAdapter{
 		gifCollection,
 	}
 }
