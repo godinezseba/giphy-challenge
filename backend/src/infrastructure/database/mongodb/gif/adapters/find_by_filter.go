@@ -2,24 +2,34 @@ package adapters
 
 import (
 	"context"
+	"fmt"
 	"giphy/challenge/src/domain/entities"
 	"giphy/challenge/src/infrastructure/database/mongodb/gif/models"
 	"giphy/challenge/src/infrastructure/database/mongodb/gif/models/mappers"
 	"log"
+	"regexp"
 
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func (g *gifMongoDBAdapter) FindByFilter(ctx context.Context, filter *entities.GIFSearch) (*entities.Pagination[entities.GIF], error) {
 	log.Println("[MongoDB > GIF > FindByFilter] Searching...")
 
-	cursor, err := g.gifCollection.Find(ctx, bson.D{
-		primitive.E{
-			Key:   "name",
-			Value: filter.Query,
-		},
-	})
+	searchString := filter.Query
+	query := bson.M{}
+
+	if searchString != "" {
+		pattern := fmt.Sprintf("(?i)%s", regexp.QuoteMeta(searchString))
+
+		query = bson.M{
+			"$or": []bson.M{
+				{"name": bson.M{"$regex": pattern}},
+				{"tags": bson.M{"$in": []string{searchString}}},
+			},
+		}
+	}
+
+	cursor, err := g.gifCollection.Find(ctx, query)
 
 	if err != nil {
 		log.Println("[MongoDB > GIF > FindByFilter] Error finding results")
