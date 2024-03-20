@@ -1,0 +1,49 @@
+{
+  "name": "giphy-challenge",
+  "version": "1.0.0",
+  "description": "frontend for ghipy application",
+  "repository": "https://github.com/godinezseba/giphy-challenge.git",
+  "author": "Sebastián Godínez <sebastian.godinez@hotmail.com>",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.7.17",
+    "@chakra-ui/icons": "^2.0.17",
+    "@chakra-ui/react": "^2.4.9",
+    "@chakra-ui/styled-system": "^2.5.1",
+    "@chakra-ui/theme-tools": "^2.0.16",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@next/font": "13.1.6",
+    "@types/node": "18.11.18",
+    "@types/react": "18.0.27",
+    "@types/react-dom": "18.0.10",
+    "@typescript-eslint/eslint-plugin": "^5.13.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "chakra-ui-markdown-renderer": "^4.1.0",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-next": "13.1.6",
+    "framer-motion": "^8.5.5",
+    "graphql": "^16.8.1",
+    "next": "13.1.6",
+    "next-real-viewport": "^0.7.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.7.1",
+    "react-markdown": "^8.0.5",
+    "react-query": "^3.39.3",
+    "typescript": "4.9.5"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0"
+  }
+}
