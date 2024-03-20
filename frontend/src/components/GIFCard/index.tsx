@@ -20,10 +20,10 @@ export default function GIFCard(props: GIFCardProps) {
   } = props;
 
   return (
-    <Flex p={50} w="full" alignItems="center" justifyContent="center">
+    <Flex p={25} alignItems="center" justifyContent="center">
       <Box
         bg="white"
-        maxW="sm"
+        w="sm"
         borderWidth="1px"
         rounded="lg"
         shadow="lg"
@@ -37,6 +37,15 @@ export default function GIFCard(props: GIFCardProps) {
               <Tag key={`${name}-${tag}`} name={tag} />
             ))}
           </Box>
+        </Box>
+        <Box
+          fontSize="2xl"
+          fontWeight="semibold"
+          as="h4"
+          lineHeight="tight"
+          isTruncated
+        >
+          {name}
         </Box>
       </Box>
     </Flex>

@@ -1,0 +1,14 @@
+
+version: '3.5'
+services:
+  front-end:
+    build:
+      context: ./
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    volumes:
+       - ./:/usr/src/app
+       - /usr/src/app/node_modules
+    environment:
+      - NEXT_PUBLIC_BFF_URL=${NEXT_PUBLIC_BFF_URL}

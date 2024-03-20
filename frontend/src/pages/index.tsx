@@ -1,24 +1,19 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
 import { useLazyQuery } from '@apollo/client';
-import { CircularProgress, Flex, useToast } from '@chakra-ui/react';
+import { Flex, useToast } from '@chakra-ui/react';
 
-import GIFCard from '@/components/GIFCard';
 import { getGIFsWithFilters } from '@/services/queries';
 import { Pagination } from '@/domain/entities/pagination';
 import { GIF } from '@/domain/entities/gif';
-
-const example: GIF = {
-  tags: ['testing', 'hello', 'world'],
-  URL: 'https://i.pinimg.com/originals/11/0e/7c/110e7c1e1c8c8953e787b56fdff866ed.gif',
-  name: 'Test',
-  content: '',
-  user: '',
-  createdAt: new Date(),
-};
+import GIFCardList from '@/components/GIFCardList';
+import { useQueryParams } from '@/hooks/useQueryParams';
 
 export default function Home() {
   const toast = useToast();
+
+  const [queryParams, setQueryParams] = useQueryParams();
+
   const [
     getGIFs,
     { loading, error, data },
@@ -41,35 +36,22 @@ export default function Home() {
       {
         variables: {
           searchQuery: {
-            page: 1,
-            query: '',
+            page: queryParams.page,
+            query: queryParams.query,
           },
         },
       },
     );
-  }, [getGIFs]);
+  }, [getGIFs, queryParams]);
 
-  if (loading || error !== undefined) {
-    return (
-      <>
-        <Head>
-          <title>Giphy Challenge</title>
-        </Head>
-        <main>
-          <Flex
-            width="100wh"
-            height="100vh"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <CircularProgress isIndeterminate color="green.300" />
-          </Flex>
-        </main>
-      </>
-    );
-  }
-
-  const { gifs: { results } } = data || { gifs: { results: [example] } };
+  const {
+    gifs: {
+      results = [],
+      page = 1,
+      totalRows = 1,
+      rowsPerPage = 1,
+    },
+  } = data || { gifs: {} };
 
   return (
     <>
@@ -77,14 +59,30 @@ export default function Home() {
         <title>Giphy Challenge</title>
       </Head>
       <main>
-        {results.map((gif) => (
-          <GIFCard
-            key={gif.name}
-            url={gif.URL}
-            tags={gif.tags}
-            name={gif.name}
+        <Flex
+          w="full"
+          flexWrap="wrap"
+          justifyContent="center"
+          paddingX={10}
+        >
+          <GIFCardList
+            isLoading={!data || loading || error !== undefined}
+            gifs={results}
+            actualPage={page}
+            totalPages={Math.round(totalRows / rowsPerPage) || 1}
+            setActualPage={(newPage: number) => {
+              setQueryParams({
+                page: newPage,
+              });
+            }}
+            actualQuery={queryParams.query || ''}
+            setQuery={(newQuery: string) => {
+              setQueryParams({
+                query: newQuery,
+              });
+            }}
           />
-        ))}
+        </Flex>
       </main>
     </>
   );
