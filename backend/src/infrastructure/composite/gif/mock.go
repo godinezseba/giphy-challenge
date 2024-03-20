@@ -39,6 +39,20 @@ func (a *AdapterMock) SaveMetadata(ctx context.Context, gif *entities.GIF) (newG
 	return newGIF, err
 }
 
+func (a *AdapterMock) SaveMultipleMetadata(ctx context.Context, gif []*entities.GIF) (newGIF []*entities.GIF, err error) {
+	args := a.Called(ctx, gif)
+
+	if args.Get(0) != nil {
+		newGIF = args.Get(0).([]*entities.GIF)
+	}
+
+	if args.Get(1) != nil {
+		err = args.Error(1)
+	}
+
+	return newGIF, err
+}
+
 func (a *AdapterMock) FindByFilter(
 	ctx context.Context,
 	filter *entities.GIFSearch,
@@ -54,6 +68,22 @@ func (a *AdapterMock) FindByFilter(
 	}
 
 	return pagination, err
+}
+
+func (a *AdapterMock) FindBySearch(
+	ctx context.Context, search string, maxNumber int,
+) (gifs []*entities.GIF, err error) {
+	args := a.Called(ctx, search)
+
+	if args.Get(0) != nil {
+		gifs = args.Get(0).([]*entities.GIF)
+	}
+
+	if args.Get(1) != nil {
+		err = args.Error(1)
+	}
+
+	return gifs, err
 }
 
 func (a *AdapterMock) RemoveContent(ctx context.Context, gif *entities.GIF) (newGIF *entities.GIF, err error) {

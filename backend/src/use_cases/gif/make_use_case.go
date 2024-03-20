@@ -12,6 +12,7 @@ type GIFUseCaseInterface interface {
 		ctx context.Context,
 		query *entities.GIFSearch,
 	) (*entities.Pagination[entities.GIF], error)
+	Populate(ctx context.Context)
 }
 
 type GIFUseCase struct {

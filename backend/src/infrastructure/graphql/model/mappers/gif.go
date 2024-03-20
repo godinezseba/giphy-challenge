@@ -16,12 +16,11 @@ func GIFInputModelToEntity(gif *model.GIFInput) *entities.GIF {
 
 func GIFEntityToModel(gif *entities.GIF) *model.Gif {
 	return &model.Gif{
-		ID:        gif.ID,
-		Name:      gif.Name,
-		URL:       gif.URL,
-		User:      gif.User,
-		Tags:      gif.Tags,
-		CreatedAt: gif.CreatedAt.GoString(),
+		ID:   gif.ID,
+		Name: gif.Name,
+		URL:  gif.URL,
+		User: gif.User,
+		Tags: gif.Tags,
 	}
 }
 

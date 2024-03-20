@@ -11,10 +11,12 @@ import (
 	gifUseCase "giphy/challenge/src/use_cases/gif"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
 func main() {
+	populate := os.Getenv("POPULATE")
 	mongoDBClient, err := mongodb.MakeMongoDBConnection()
 	if err != nil {
 		log.Fatalf("Error creating MongoDB connection: %s", err.Error())
@@ -26,6 +28,10 @@ func main() {
 	)
 
 	gifUseCase := gifUseCase.MakeGIFUseCase(gifPort)
+
+	if populate == "true" {
+		gifUseCase.Populate(context.Background())
+	}
 
 	graphQLServer := servergraphql.MakeGraphQLServer(gifUseCase)
 

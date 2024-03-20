@@ -12,7 +12,7 @@ import (
 )
 
 func (g *gifHTTPAdapter) findByID(gif *entities.GIF) (*entities.GIF, error) {
-	baseURL := os.Getenv("GIPHY_SEARCH_URL")
+	baseURL := os.Getenv("GIPHY_FIND_URL")
 	apiToken := os.Getenv("GIPHY_API_KEY")
 
 	queryParams := url.Values{}
@@ -42,7 +42,7 @@ func (g *gifHTTPAdapter) findByID(gif *entities.GIF) (*entities.GIF, error) {
 		return nil, err
 	}
 
-	var response *dto.FindResponse
+	var response *dto.FindByIDResponse
 
 	if err = json.Unmarshal(responseBuffer, &response); err != nil {
 		log.Println("[HTTP > Giphy > FindByID] Error converting response")
