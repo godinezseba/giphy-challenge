@@ -26,8 +26,9 @@ type GIFPagination struct {
 }
 
 type GIFSearchInput struct {
-	Query *string `json:"query,omitempty"`
-	Page  int     `json:"page"`
+	Query    *string `json:"query,omitempty"`
+	Page     *int    `json:"page,omitempty"`
+	PageSize *int    `json:"pageSize,omitempty"`
 }
 
 type Mutation struct {

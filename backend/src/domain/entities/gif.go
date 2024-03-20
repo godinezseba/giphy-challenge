@@ -14,6 +14,7 @@ type GIF struct {
 }
 
 type GIFSearch struct {
-	Query string
-	Page  int
+	Query    string
+	Page     int
+	PageSize int
 }

@@ -10,6 +10,7 @@ import (
 	"regexp"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func (g *gifMongoDBAdapter) FindByFilter(ctx context.Context, filter *entities.GIFSearch) (*entities.Pagination[entities.GIF], error) {
@@ -17,6 +18,9 @@ func (g *gifMongoDBAdapter) FindByFilter(ctx context.Context, filter *entities.G
 
 	searchString := filter.Query
 	query := bson.M{}
+	pagination := options.Find().
+		SetLimit(int64(filter.PageSize)).
+		SetSkip(int64((filter.Page - 1) * filter.PageSize))
 
 	if searchString != "" {
 		pattern := fmt.Sprintf("(?i)%s", regexp.QuoteMeta(searchString))
@@ -29,7 +33,14 @@ func (g *gifMongoDBAdapter) FindByFilter(ctx context.Context, filter *entities.G
 		}
 	}
 
-	cursor, err := g.gifCollection.Find(ctx, query)
+	total, err := g.gifCollection.CountDocuments(ctx, query)
+	if err != nil {
+		log.Println("[MongoDB > GIF > FindByFilter] Error counting results")
+
+		return nil, err
+	}
+
+	cursor, err := g.gifCollection.Find(ctx, query, pagination)
 
 	if err != nil {
 		log.Println("[MongoDB > GIF > FindByFilter] Error finding results")
@@ -46,7 +57,9 @@ func (g *gifMongoDBAdapter) FindByFilter(ctx context.Context, filter *entities.G
 	}
 
 	return &entities.Pagination[entities.GIF]{
-		Page:    filter.Page,
-		Results: mappers.GIFModelsToEntities(gifModels),
+		Page:        filter.Page,
+		RowsPerPage: filter.PageSize,
+		TotalRows:   total,
+		Results:     mappers.GIFModelsToEntities(gifModels),
 	}, nil
 }

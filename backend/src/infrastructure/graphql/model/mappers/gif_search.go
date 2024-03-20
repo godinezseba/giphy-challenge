@@ -6,8 +6,14 @@ import (
 )
 
 func GIFSearchModelToEntity(gifSearch *model.GIFSearchInput) *entities.GIFSearch {
-	entity := &entities.GIFSearch{
-		Page: gifSearch.Page,
+	entity := &entities.GIFSearch{}
+
+	if gifSearch.Page != nil {
+		entity.Page = *gifSearch.Page
+	}
+
+	if gifSearch.PageSize != nil {
+		entity.PageSize = *gifSearch.PageSize
 	}
 
 	if gifSearch.Query != nil {

@@ -23,5 +23,6 @@ input GIFInput {
 
 input GIFSearchInput {
 	query: String
-	page: Int!
+	page: Int = 1
+	pageSize: Int = 10
 }

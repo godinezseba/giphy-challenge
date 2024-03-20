@@ -13,7 +13,7 @@ func (g *GIFUseCase) FindByFilter(
 ) (*entities.Pagination[entities.GIF], error) {
 	log.Println(
 		"[Use Case > GIF > Find by Filter] Searching...",
-		map[string]any{"search": query.Query, "page": query.Page},
+		map[string]any{"search": query.Query, "page": query.Page, "pageSize": query.PageSize},
 	)
 
 	result, err := g.GIFPersistenceAdapter.FindByFilter(ctx, query)

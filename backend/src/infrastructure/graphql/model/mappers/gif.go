@@ -40,7 +40,7 @@ func GifPaginationEntityToModel(
 	return &model.GIFPagination{
 		Page:        pagination.Page,
 		RowsPerPage: pagination.RowsPerPage,
-		TotalRows:   pagination.TotalRows,
+		TotalRows:   int(pagination.TotalRows),
 		Results:     GIFEntitiesToModels(pagination.Results),
 	}
 }

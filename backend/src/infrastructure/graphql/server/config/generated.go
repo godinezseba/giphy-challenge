@@ -311,7 +311,7 @@ type GIFPagination {
 	page: Int!
 	rowsPerPage: Int!
 	totalRows: Int!
-	results:     [GIF]!
+	results: [GIF]!
 }
 
 input GIFInput {
@@ -323,7 +323,8 @@ input GIFInput {
 
 input GIFSearchInput {
 	query: String
-	page: Int!
+	page: Int = 1
+	pageSize: Int = 10
 }
 `, BuiltIn: false},
 	{Name: "../../schemas/mutations.graphqls", Input: `type Mutation {
@@ -2963,7 +2964,14 @@ func (ec *executionContext) unmarshalInputGIFSearchInput(ctx context.Context, ob
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"query", "page"}
+	if _, present := asMap["page"]; !present {
+		asMap["page"] = 1
+	}
+	if _, present := asMap["pageSize"]; !present {
+		asMap["pageSize"] = 10
+	}
+
+	fieldsInOrder := [...]string{"query", "page", "pageSize"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -2979,11 +2987,18 @@ func (ec *executionContext) unmarshalInputGIFSearchInput(ctx context.Context, ob
 			it.Query = data
 		case "page":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("page"))
-			data, err := ec.unmarshalNInt2int(ctx, v)
+			data, err := ec.unmarshalOInt2ᚖint(ctx, v)
 			if err != nil {
 				return it, err
 			}
 			it.Page = data
+		case "pageSize":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pageSize"))
+			data, err := ec.unmarshalOInt2ᚖint(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.PageSize = data
 		}
 	}
 
@@ -3994,6 +4009,22 @@ func (ec *executionContext) unmarshalOGIFSearchInput2ᚖgiphyᚋchallengeᚋsrc�
 	}
 	res, err := ec.unmarshalInputGIFSearchInput(ctx, v)
 	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalOInt2ᚖint(ctx context.Context, v interface{}) (*int, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := graphql.UnmarshalInt(v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOInt2ᚖint(ctx context.Context, sel ast.SelectionSet, v *int) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalInt(*v)
+	return res
 }
 
 func (ec *executionContext) unmarshalOString2ᚖstring(ctx context.Context, v interface{}) (*string, error) {
