@@ -14,8 +14,6 @@ import (
 func (g *gifMongoDBAdapter) FindByFilter(ctx context.Context, filter *entities.GIFSearch) (*entities.Pagination[entities.GIF], error) {
 	log.Println("[MongoDB > GIF > FindByFilter] Searching...")
 
-	var gifModels []*models.GIF
-
 	cursor, err := g.gifCollection.Find(ctx, bson.D{
 		primitive.E{
 			Key:   "name",
@@ -29,7 +27,9 @@ func (g *gifMongoDBAdapter) FindByFilter(ctx context.Context, filter *entities.G
 		return nil, err
 	}
 
-	if err := cursor.All(ctx, gifModels); err != nil {
+	gifModels := make([]*models.GIF, cursor.RemainingBatchLength())
+
+	if err := cursor.All(ctx, &gifModels); err != nil {
 		log.Println("[MongoDB > GIF > FindByFilter] Error converting results")
 
 		return nil, err

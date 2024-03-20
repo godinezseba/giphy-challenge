@@ -11,7 +11,7 @@ type GIFPagination {
 	page: Int!
 	rowsPerPage: Int!
 	totalRows: Int!
-	results:     [GIF]!
+	results: [GIF]!
 }
 
 input GIFInput {

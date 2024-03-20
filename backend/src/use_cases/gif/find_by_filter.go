@@ -19,7 +19,7 @@ func (g *GIFUseCase) FindByFilter(
 	result, err := g.GIFPersistenceAdapter.FindByFilter(ctx, query)
 	if err != nil {
 		log.Println(
-			"[Use Case > GIF > Create] Error storing content",
+			"[Use Case > GIF > Find by Filter] Error storing content",
 			map[string]any{"search": query.Query, "page": query.Page, "error": err.Error()},
 		)
 
