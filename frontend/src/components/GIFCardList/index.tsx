@@ -3,6 +3,7 @@ import {
   CircularProgress,
   Flex,
 } from '@chakra-ui/react';
+import Link from 'next/link';
 
 import GIFCard from '@/components/GIFCard';
 import Pagination from '../Pagination';
@@ -41,6 +42,12 @@ export default function GIFCardList(props: GIFCardListProps) {
       paddingY={200}
       paddingX={200}
     >
+      <Link
+        href="/create"
+      >
+        Agrega tu propio GIF aquí!
+      </Link>
+
       <SearchVar
         actualQuery={actualQuery}
         setQuery={setQuery}
@@ -57,8 +64,8 @@ export default function GIFCardList(props: GIFCardListProps) {
       <Flex
         width="full"
         height="full"
-        justifyContent="center"
-        alignItems="center"
+        justifyContent="space-between"
+        alignItems="flex-start"
         flexWrap="wrap"
       >
         { isLoading ? (

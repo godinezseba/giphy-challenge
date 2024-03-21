@@ -21,6 +21,7 @@ export default function Pagination(props: PaginationProps) {
     <Flex
       w="full"
       justifyContent="space-between"
+      alignItems="center"
     >
       <IconButton
         isLoading={isLoading}
