@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"giphy/challenge/src/domain/entities"
 	"giphy/challenge/src/infrastructure/http/giphy/dto"
 	"io"
@@ -42,7 +43,7 @@ func (g *gifHTTPAdapter) SaveContent(ctx context.Context, gif *entities.GIF) (*e
 	if resp.StatusCode != http.StatusOK {
 		log.Printf("[HTTP > Giphy > SaveContent] Unexpected response status code: %d", resp.StatusCode)
 
-		return nil, err
+		return nil, errors.New("Unexpected response status code")
 	}
 
 	responseBuffer, err := io.ReadAll(resp.Body)
