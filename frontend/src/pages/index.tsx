@@ -70,7 +70,7 @@ export default function Home() {
             isLoading={!data || loading || error !== undefined}
             gifs={results}
             actualPage={page}
-            totalPages={Math.round(totalRows / rowsPerPage) || 1}
+            totalPages={Math.ceil(totalRows / rowsPerPage) || 1}
             setActualPage={(newPage: number) => {
               setQueryParams({
                 page: newPage,
@@ -80,6 +80,7 @@ export default function Home() {
             setQuery={(newQuery: string) => {
               setQueryParams({
                 query: newQuery,
+                page: 1,
               });
             }}
           />

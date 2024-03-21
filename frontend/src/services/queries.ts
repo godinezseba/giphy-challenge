@@ -7,6 +7,7 @@ export const getGIFsWithFilters = gql`
       rowsPerPage
       totalRows
       results {
+        id
         URL
         tags
         name

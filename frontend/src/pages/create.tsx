@@ -19,7 +19,7 @@ export default function Search() {
         isClosable: true,
       });
 
-      router.push(router.basePath);
+      router.push('/');
     },
     onError: ({ message }) => {
       toast({

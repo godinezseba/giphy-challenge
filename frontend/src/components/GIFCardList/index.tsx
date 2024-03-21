@@ -11,6 +11,7 @@ import SearchVar from '../SearchVar';
 
 type GIFCardListProps = {
   gifs: {
+    id: string
     URL: string
     tags: string[]
     name: string
@@ -72,7 +73,7 @@ export default function GIFCardList(props: GIFCardListProps) {
           <CircularProgress isIndeterminate color="green.300" />
         ) : gifs.map((gif) => (
           <GIFCard
-            key={gif.name}
+            key={`${gif.id}-${gif.name}`}
             url={gif.URL}
             tags={gif.tags}
             name={gif.name}

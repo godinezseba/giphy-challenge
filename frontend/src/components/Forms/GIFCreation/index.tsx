@@ -29,11 +29,11 @@ const CreationSchema = Yup.object().shape({
   file: Yup.mixed()
     .test({
       message: 'El archivo tiene que ser de tipo GIF',
-      test: (file) => (file?.name.includes('gif')),
+      test: (file) => ((file as File).name.includes('gif')),
     })
     .test({
       message: 'El archivo es muy pesado',
-      test: (file) => (file?.size < MAX_FILE_SIZE),
+      test: (file) => ((file as File).size < MAX_FILE_SIZE),
     })
     .required('El archivo es requerido'),
   name: Yup.string()
@@ -53,6 +53,7 @@ export default function GIFCreation(props: GIFCreationProps) {
         let file: string = '';
         try {
           file = await toBase64(values.file);
+          file = file.replaceAll('data:image/gif;base64,', '');
         } catch (error) {
           toast({
             title: 'Error al leer el archivo',

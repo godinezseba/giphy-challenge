@@ -1,4 +1,5 @@
 export type GIF = {
+  id: string
   name: string
   URL: string
   content: string
@@ -10,6 +11,7 @@ export type GIF = {
 export const makeGIF = (
   input: Partial<GIF>,
 ): GIF => {
+  let id: string = input.id ?? '';
   let name: string = input.name ?? '';
   let URL: string = input.URL ?? '';
   let content: string = input.content ?? '';
@@ -18,6 +20,12 @@ export const makeGIF = (
   let createdAt: Date = input.createdAt ?? new Date();
 
   return {
+    get id(): string {
+      return id;
+    },
+    set id(newId: string) {
+      id = newId;
+    },
     get name(): string {
       return name;
     },
