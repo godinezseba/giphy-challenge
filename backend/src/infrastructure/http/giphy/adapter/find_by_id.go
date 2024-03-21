@@ -2,6 +2,7 @@ package adapter
 
 import (
 	"encoding/json"
+	"errors"
 	"giphy/challenge/src/domain/entities"
 	"giphy/challenge/src/infrastructure/http/giphy/dto"
 	"io"
@@ -18,7 +19,9 @@ func (g *gifHTTPAdapter) findByID(gif *entities.GIF) (*entities.GIF, error) {
 	queryParams := url.Values{}
 	queryParams.Set("api_key", apiToken)
 
-	reqURL := baseURL + "/" + gif.ProviderID + "?" + queryParams.Encode()
+	reqURL := baseURL + gif.ProviderID + "?" + queryParams.Encode()
+
+	log.Println("[HTTP > Giphy > FindByID] Searching...", reqURL)
 
 	resp, err := g.httpClient.Get(reqURL)
 	if err != nil {
@@ -32,7 +35,7 @@ func (g *gifHTTPAdapter) findByID(gif *entities.GIF) (*entities.GIF, error) {
 	if resp.StatusCode != http.StatusOK {
 		log.Printf("[HTTP > Giphy > FindByID] Unexpected response status code: %d", resp.StatusCode)
 
-		return nil, err
+		return nil, errors.New("unexpected response status code")
 	}
 
 	responseBuffer, err := io.ReadAll(resp.Body)

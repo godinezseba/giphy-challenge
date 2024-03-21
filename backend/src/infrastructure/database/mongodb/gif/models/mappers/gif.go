@@ -8,18 +8,18 @@ import (
 
 func GIFEntityToModel(gif *entities.GIF) *models.GIF {
 	return &models.GIF{
-		ID:        gif.ID,
-		Name:      gif.Name,
-		URL:       gif.URL,
-		User:      gif.User,
-		Tags:      gif.Tags,
-		CreatedAt: time.Now().Format(time.ANSIC),
+		ProviderID: gif.ProviderID,
+		Name:       gif.Name,
+		URL:        gif.URL,
+		User:       gif.User,
+		Tags:       gif.Tags,
+		CreatedAt:  time.Now().Format(time.ANSIC),
 	}
 }
 
 func GIFModelToEntity(gif *models.GIF) *entities.GIF {
 	return &entities.GIF{
-		ID:   gif.ID,
+		ID:   gif.ID.String(),
 		Name: gif.Name,
 		URL:  gif.URL,
 		User: gif.User,

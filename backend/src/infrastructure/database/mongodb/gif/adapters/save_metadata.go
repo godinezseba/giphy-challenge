@@ -5,6 +5,8 @@ import (
 	"giphy/challenge/src/domain/entities"
 	"giphy/challenge/src/infrastructure/database/mongodb/gif/models/mappers"
 	"log"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func (g *gifMongoDBAdapter) SaveMetadata(ctx context.Context, gif *entities.GIF) (*entities.GIF, error) {
@@ -20,7 +22,7 @@ func (g *gifMongoDBAdapter) SaveMetadata(ctx context.Context, gif *entities.GIF)
 		return nil, err
 	}
 
-	gif.ID = insertID.InsertedID.(string)
+	gif.ID = insertID.InsertedID.(primitive.ObjectID).String()
 
 	return gif, nil
 }
